@@ -16,5 +16,7 @@ timecop.func_override=0
 <?php
 $dt = new TimecopDateTime("2039-01-01 12:00:00 GMT");
 var_dump($dt->format("c"));
+var_dump($dt->getTimestamp());
 --EXPECT--
 string(25) "2039-01-01T12:00:00+00:00"
+int(2177496000)
