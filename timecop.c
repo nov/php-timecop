@@ -635,7 +635,9 @@ static int fix_datetime_timestamp(zval **datetime_obj, zval *time, zval *timezon
 		zend_call_method_with_1_params(NULL, NULL, NULL, "date_default_timezone_set", NULL, zonename);
 		zval_ptr_dtor(&zonename);
 	}
-	zend_call_method_with_1_params(NULL, NULL, NULL, "timecop_strtotime", &fixed_timestamp, time);
+	zval *fixed_datetime;
+	zend_call_method_with_1_params(NULL, TIMECOP_G(ce_DateTime), &TIMECOP_G(ce_DateTime)->constructor, "__construct", &fixed_datetime, time);
+	zend_call_method_with_0_params(&fixed_datetime, Z_OBJCE_PP(&fixed_datetime), NULL, "getTimestamp", &fixed_timestamp);
 	if (timezone_obj) {
 		zend_call_method_with_1_params(NULL, NULL, NULL, "date_default_timezone_set", NULL, orig_zonename);
 		zval_ptr_dtor(&orig_zonename);
